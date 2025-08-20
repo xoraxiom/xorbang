@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XORBANG - The Developer-First Immutable OS</title>
+    <meta name="description" content="XORBANG combines immutable infrastructure security with developer-friendly workflows through innovative hybrid architecture using OSTree, systemd-sysext, and transient overlays.">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">XORBANG</span>
+                <span class="version-badge">v2.0</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#architecture">Architecture</a>
+                <a href="#comparison">Comparison</a>
+                <a href="https://github.com/xoraxiom/xorbang" target="_blank">GitHub</a>
+                <a href="#docs" class="btn-primary-small">Documentation</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">The <span class="gradient-text">Developer-First</span> Immutable OS</h1>
+                <p class="hero-subtitle">
+                    XORBANG revolutionizes immutable infrastructure by solving the fundamental tension between security and developer productivity. Build, experiment, deploy—without compromise.
+                </p>
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <span class="feature-icon">🔒</span>
+                        <span>Production Immutability</span>
+                    </div>
+                    <div class="hero-feature">
+                        <span class="feature-icon">🚀</span>
+                        <span>Developer Flexibility</span>
+                    </div>
+                    <div class="hero-feature">
+                        <span class="feature-icon">⚡</span>
+                        <span>90% Less Complexity</span>
+                    </div>
+                </div>
+                <div class="hero-actions">
+                    <a href="#quick-start" class="btn-primary">Get Started</a>
+                    <a href="#architecture" class="btn-secondary">Learn More</a>
+                </div>
+                <div class="hero-code">
+                    <pre><code># Boot into development mode - experiment freely
+kernel cmdline: xorbang.dev=1
+
+# Your changes are safe in a transient overlay
+apt install experimental-package
+vim /etc/nginx/nginx.conf
+
+# Reboot to discard changes or commit to base image
+systemctl reboot  # Back to pristine state</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem-section">
+        <div class="container">
+            <h2 class="section-title">The Immutable OS Dilemma</h2>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h3>Traditional Immutable Systems</h3>
+                    <ul class="problem-list">
+                        <li>❌ Break developer workflows</li>
+                        <li>❌ Require paradigm shifts (NixOS, Talos)</li>
+                        <li>❌ Force container-only development</li>
+                        <li>❌ Need reboots for package testing</li>
+                    </ul>
+                </div>
+                <div class="problem-card highlight">
+                    <h3>XORBANG's Solution</h3>
+                    <ul class="solution-list">
+                        <li>✅ Preserves Linux development patterns</li>
+                        <li>✅ Uses familiar systemd tooling</li>
+                        <li>✅ Transient overlays for experimentation</li>
+                        <li>✅ Instant rollback via reboot</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title">Revolutionary Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-number">01</span>
+                        <h3>Graduated Immutability</h3>
+                    </div>
+                    <p>Production systems run with dm-verity protected filesystems. Development mode enables controlled mutability via kernel parameter—no rebuilds required.</p>
+                    <div class="feature-code">
+                        <code># Production: Fully immutable
+/usr (dm-verity, read-only)
+/etc (dm-verity + confext)
+
+# Development: Transient overlay
+mount -t overlay /usr/local</code>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-number">02</span>
+                        <h3>Composable Layers</h3>
+                    </div>
+                    <p>Build features as independent systemd-sysext layers. Compose at runtime without rebuilding base images. Mix and match for different deployments.</p>
+                    <div class="feature-code">
+                        <code>/usr/lib/extensions/
+├── gui.raw
+├── development.raw
+├── kubernetes.raw
+└── monitoring.raw</code>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-number">03</span>
+                        <h3>Declarative Simplicity</h3>
+                    </div>
+                    <p>Replace thousands of lines of Ansible with declarative systemd-repart definitions. Complex disk layouts become simple, reproducible configurations.</p>
+                    <div class="feature-code">
+                        <code>[Partition]
+Type=linux-generic
+Label=root
+Encrypt=tpm2+pin
+Format=btrfs</code>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-number">04</span>
+                        <h3>Atomic Updates</h3>
+                    </div>
+                    <p>OSTree provides Git-like versioning for your OS. Atomic updates with automatic rollback on failure. Always boot into a known-good state.</p>
+                    <div class="feature-code">
+                        <code>ostree pull origin main
+ostree admin deploy main
+# Automatic rollback on failure</code>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-number">05</span>
+                        <h3>Host-Specific Config</h3>
+                    </div>
+                    <p>Apply host configuration at boot time, not build time. Network settings, disk encryption keys, and hardware configs without image proliferation.</p>
+                    <div class="feature-code">
+                        <code># /etc/xorbang/host-config.yaml
+hostname: workstation-01
+network:
+  interfaces: [...]
+disk:
+  luks: [...]</code>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="feature-number">06</span>
+                        <h3>Security by Default</h3>
+                    </div>
+                    <p>Full chain of trust from Secure Boot to runtime. Cryptographic verification, IMA/EVM policies, and systemd sandboxing protect your infrastructure.</p>
+                    <div class="feature-code">
+                        <code>✓ Secure Boot → UKI
+✓ dm-verity filesystems
+✓ SELinux/AppArmor mandatory
+✓ systemd sandboxing</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="architecture-section">
+        <div class="container">
+            <h2 class="section-title">Hybrid Architecture</h2>
+            <div class="architecture-diagram">
+                <svg viewBox="0 0 800 600" class="arch-svg">
+                    <!-- Base Layer -->
+                    <rect x="50" y="450" width="700" height="100" fill="#1a1f36" stroke="#3b82f6" stroke-width="2" rx="8"/>
+                    <text x="400" y="485" text-anchor="middle" fill="#fff" font-size="16" font-weight="600">OSTree Base System (Immutable Debian)</text>
+                    <text x="400" y="510" text-anchor="middle" fill="#94a3b8" font-size="14">Atomic updates • Rollback capability • dm-verity protected</text>
+
+                    <!-- Feature Layers -->
+                    <rect x="150" y="320" width="200" height="100" fill="#1e293b" stroke="#10b981" stroke-width="2" rx="8"/>
+                    <text x="250" y="360" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">systemd-sysext</text>
+                    <text x="250" y="385" text-anchor="middle" fill="#94a3b8" font-size="12">Feature Layers</text>
+
+                    <rect x="450" y="320" width="200" height="100" fill="#1e293b" stroke="#10b981" stroke-width="2" rx="8"/>
+                    <text x="550" y="360" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">systemd-confext</text>
+                    <text x="550" y="385" text-anchor="middle" fill="#94a3b8" font-size="12">Host Config</text>
+
+                    <!-- Development Overlay -->
+                    <rect x="300" y="190" width="200" height="100" fill="#1e293b" stroke="#f59e0b" stroke-width="2" rx="8" stroke-dasharray="5,5"/>
+                    <text x="400" y="230" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">Transient Overlay</text>
+                    <text x="400" y="255" text-anchor="middle" fill="#94a3b8" font-size="12">Development Mode</text>
+
+                    <!-- Applications -->
+                    <rect x="200" y="60" width="120" height="80" fill="#1e293b" stroke="#8b5cf6" stroke-width="2" rx="8"/>
+                    <text x="260" y="95" text-anchor="middle" fill="#fff" font-size="14">Workstation</text>
+
+                    <rect x="340" y="60" width="120" height="80" fill="#1e293b" stroke="#8b5cf6" stroke-width="2" rx="8"/>
+                    <text x="400" y="95" text-anchor="middle" fill="#fff" font-size="14">Server</text>
+
+                    <rect x="480" y="60" width="120" height="80" fill="#1e293b" stroke="#8b5cf6" stroke-width="2" rx="8"/>
+                    <text x="540" y="95" text-anchor="middle" fill="#fff" font-size="14">Hypervisor</text>
+
+                    <!-- Arrows -->
+                    <path d="M 250 420 L 250 450" stroke="#10b981" stroke-width="2" marker-end="url(#arrowgreen)"/>
+                    <path d="M 550 420 L 550 450" stroke="#10b981" stroke-width="2" marker-end="url(#arrowgreen)"/>
+                    <path d="M 400 290 L 400 320" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowyellow)"/>
+                    <path d="M 260 140 L 260 190" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arrowpurple)"/>
+                    <path d="M 400 140 L 400 190" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arrowpurple)"/>
+                    <path d="M 540 140 L 540 190" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arrowpurple)"/>
+
+                    <!-- Arrow markers -->
+                    <defs>
+                        <marker id="arrowgreen" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto" fill="#10b981">
+                            <path d="M 0 0 L 10 5 L 0 10 z"/>
+                        </marker>
+                        <marker id="arrowyellow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto" fill="#f59e0b">
+                            <path d="M 0 0 L 10 5 L 0 10 z"/>
+                        </marker>
+                        <marker id="arrowpurple" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto" fill="#8b5cf6">
+                            <path d="M 0 0 L 10 5 L 0 10 z"/>
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+            <div class="architecture-details">
+                <div class="arch-detail">
+                    <h3>Build Time</h3>
+                    <p>6x faster with intelligent caching. From 30 minutes to under 5 minutes for incremental builds.</p>
+                </div>
+                <div class="arch-detail">
+                    <h3>Deployment</h3>
+                    <p>Boot from ISO/PXE, run one command. Automated disk partitioning, encryption, and configuration.</p>
+                </div>
+                <div class="arch-detail">
+                    <h3>Updates</h3>
+                    <p>Delta updates via OSTree. Only changed blocks transfer. Automatic rollback on failure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison" class="comparison-section">
+        <div class="container">
+            <h2 class="section-title">How XORBANG Compares</h2>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th class="highlight">XORBANG</th>
+                            <th>NixOS</th>
+                            <th>Fedora Silverblue</th>
+                            <th>Talos Linux</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Developer Workflow</td>
+                            <td class="highlight">✅ Native Linux</td>
+                            <td>❌ Nix language</td>
+                            <td>⚠️ Toolbox required</td>
+                            <td>❌ No shell access</td>
+                        </tr>
+                        <tr>
+                            <td>Learning Curve</td>
+                            <td class="highlight">✅ Minimal</td>
+                            <td>❌ Steep</td>
+                            <td>⚠️ Moderate</td>
+                            <td>❌ Very steep</td>
+                        </tr>
+                        <tr>
+                            <td>Package Testing</td>
+                            <td class="highlight">✅ Instant</td>
+                            <td>⚠️ Rebuild</td>
+                            <td>❌ Reboot</td>
+                            <td>❌ Not supported</td>
+                        </tr>
+                        <tr>
+                            <td>Config Complexity</td>
+                            <td class="highlight">✅ 50 lines</td>
+                            <td>❌ 1000+ lines</td>
+                            <td>⚠️ 500+ lines</td>
+                            <td>⚠️ 200+ lines</td>
+                        </tr>
+                        <tr>
+                            <td>Rollback</td>
+                            <td class="highlight">✅ Automatic</td>
+                            <td>✅ Manual</td>
+                            <td>✅ Manual</td>
+                            <td>✅ Automatic</td>
+                        </tr>
+                        <tr>
+                            <td>Host Variability</td>
+                            <td class="highlight">✅ Boot-time</td>
+                            <td>⚠️ Build-time</td>
+                            <td>⚠️ Build-time</td>
+                            <td>❌ Limited</td>
+                        </tr>
+                        <tr>
+                            <td>Migration Path</td>
+                            <td class="highlight">✅ Incremental</td>
+                            <td>❌ Full rewrite</td>
+                            <td>⚠️ Significant</td>
+                            <td>❌ Full rewrite</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section class="workflow-section">
+        <div class="container">
+            <h2 class="section-title">Real-World Workflows</h2>
+            <div class="workflow-grid">
+                <div class="workflow-card">
+                    <h3>Development Workflow</h3>
+                    <div class="workflow-steps">
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <div class="step-content">
+                                <strong>Boot with dev flag</strong>
+                                <code>xorbang.dev=1</code>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <div class="step-content">
+                                <strong>Experiment freely</strong>
+                                <code>apt install nginx-experimental</code>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <div class="step-content">
+                                <strong>Test and validate</strong>
+                                <code>systemctl start nginx</code>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">4</span>
+                            <div class="step-content">
+                                <strong>Commit or discard</strong>
+                                <code>xorbang-commit-overlay</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-card">
+                    <h3>Production Deployment</h3>
+                    <div class="workflow-steps">
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <div class="step-content">
+                                <strong>Build new image</strong>
+                                <code>mkosi build --profile=prod</code>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <div class="step-content">
+                                <strong>Push to repository</strong>
+                                <code>ostree push origin main</code>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <div class="step-content">
+                                <strong>Stage deployment</strong>
+                                <code>ostree admin deploy --stage</code>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">4</span>
+                            <div class="step-content">
+                                <strong>Automatic rollback</strong>
+                                <code># On failure, auto-rollback</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section id="quick-start" class="quickstart-section">
+        <div class="container">
+            <h2 class="section-title">Quick Start</h2>
+            <div class="quickstart-content">
+                <div class="quickstart-step">
+                    <h3>1. Clone the Repository</h3>
+                    <pre><code>git clone https://github.com/xoraxiom/xorbang.git
+cd xorbang</code></pre>
+                </div>
+                <div class="quickstart-step">
+                    <h3>2. Build Your First Image</h3>
+                    <pre><code># Build base image with OSTree
+./build.sh --profile=workstation --output=/srv/images/
+
+# Or use mkosi directly
+mkosi --profile=workstation build</code></pre>
+                </div>
+                <div class="quickstart-step">
+                    <h3>3. Deploy to Target System</h3>
+                    <pre><code># Boot target from ISO/PXE, then:
+xorbang-installer --host=workstation-01
+
+# System automatically:
+# - Partitions disks with systemd-repart
+# - Deploys OSTree image
+# - Applies host configuration
+# - Sets up boot entries</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Revolutionize Your Infrastructure?</h2>
+                <p>Join the growing community building the future of immutable operating systems.</p>
+                <div class="cta-actions">
+                    <a href="https://github.com/xoraxiom/xorbang" class="btn-primary">View on GitHub</a>
+                    <a href="#docs" class="btn-secondary">Read Documentation</a>
+                </div>
+                <div class="cta-stats">
+                    <div class="stat">
+                        <span class="stat-number">90%</span>
+                        <span class="stat-label">Less Complexity</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">6x</span>
+                        <span class="stat-label">Faster Builds</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label">Paradigm Shifts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>XORBANG</h4>
+                    <p>The developer-first immutable OS that doesn't compromise.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#docs">Documentation</a></li>
+                        <li><a href="https://github.com/xoraxiom/xorbang">GitHub</a></li>
+                        <li><a href="#roadmap">Roadmap</a></li>
+                        <li><a href="#contributing">Contributing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="#discord">Discord</a></li>
+                        <li><a href="#matrix">Matrix</a></li>
+                        <li><a href="#discussions">Discussions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Built With</h4>
+                    <ul>
+                        <li>OSTree</li>
+                        <li>systemd</li>
+                        <li>Debian</li>
+                        <li>Love ❤️</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 XORBANG Project. Released under MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./script.js"></script>
+</body>
+</html>

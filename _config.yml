@@ -1,0 +1,6 @@
+# GitHub Pages Configuration
+theme: null
+title: XORBANG - The Developer-First Immutable OS
+description: XORBANG combines immutable infrastructure security with developer-friendly workflows through innovative hybrid architecture.
+url: https://xorbang.org
+baseurl: ""
